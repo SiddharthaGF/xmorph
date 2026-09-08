@@ -1,0 +1,7 @@
+/vendor/
+.phpunit.result.cache
+/build/
+.idea/
+composer.lock
+.rector-cache
+.phpstan-cache

@@ -1,0 +1,27 @@
+includes:
+    - vendor/phpstan/phpstan-strict-rules/rules.neon
+    - vendor/nesbot/carbon/extension.neon
+    - vendor/phpstan/phpstan-phpunit/extension.neon
+    - phar://phpstan.phar/conf/bleedingEdge.neon
+
+parameters:
+    paths:
+        - src
+        - tests
+
+    bootstrapFiles:
+        - phpstan-bootstrap.php
+
+    excludePaths:
+        - tests/Fixtures
+
+    level: max
+
+    tmpDir: .phpstan-cache
+
+    checkTooWideReturnTypesInProtectedAndPublicMethods: true
+    checkUninitializedProperties: true
+    checkDynamicProperties: true
+    reportMaybesInMethodSignatures: true
+    reportMaybesInPropertyPhpDocTypes: true
+    checkMissingOverrideMethodAttribute: false

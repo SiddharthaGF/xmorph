@@ -1,0 +1,3 @@
+<div>
+    <span id="count">{{ $count }}</span>
+</div>
