@@ -4,14 +4,19 @@ declare(strict_types=1);
 
 namespace SiddharthaGF\XMorph;
 
+use Illuminate\Contracts\Config\Repository;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\View\ComponentAttributeBag;
 use SiddharthaGF\XMorph\Contracts\HtmlParser;
 use SiddharthaGF\XMorph\Parsers\RootElementParser;
+use SiddharthaGF\XMorph\View\Components\Morph;
+use Throwable;
 
 use function in_array;
 use function is_string;
+use function strtolower;
+use function trim;
 
 final class XmorphServiceProvider extends ServiceProvider
 {
@@ -93,6 +98,44 @@ final class XmorphServiceProvider extends ServiceProvider
 
             return '<?php $__xmorphAsChild = (bool) ('.$expression.'); ?>';
         });
+
+        if (function_exists('config_path')) {
+            $this->publishes([
+                __DIR__.'/../config/xmorph.php' => config_path('xmorph.php'),
+            ], 'xmorph-config');
+        }
+
+        // Internal morph component behind a configurable alias
+        // (`<x-{alias}>`, default `<x-morph>`). The config value wins when
+        // present; anything missing or invalid falls back to the default
+        // so the component also resolves outside Laravel.
+        $alias = 'morph';
+
+        try {
+            $repository = $this->app->make(Repository::class);
+
+            if ($repository instanceof Repository) {
+                $candidate = $repository->get('xmorph.alias');
+
+                if (is_string($candidate) && trim($candidate) !== '') {
+                    $alias = strtolower(trim($candidate));
+                }
+            }
+        } catch (Throwable) {
+            // No config repository available: keep the default alias.
+        }
+
+        Blade::component(Morph::class, $alias);
+    }
+
+    public function register(): void
+    {
+        try {
+            $this->mergeConfigFrom(__DIR__.'/../config/xmorph.php', 'xmorph');
+        } catch (Throwable) {
+            // Non-Laravel hosts have no config repository; the component
+            // alias falls back to the default in boot().
+        }
     }
 
     /**

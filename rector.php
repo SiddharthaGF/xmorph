@@ -6,6 +6,7 @@ use Rector\Caching\ValueObject\Storage\FileCacheStorage;
 use Rector\CodeQuality\Rector\ClassMethod\LocallyCalledStaticMethodToNonStaticRector;
 use Rector\Config\RectorConfig;
 use Rector\DeadCode\Rector\Cast\RecastingRemovalRector;
+use Rector\Renaming\Rector\MethodCall\RenameMethodRector;
 use RectorLaravel\Rector\FuncCall\ThrowIfAndThrowUnlessExceptionsToUseClassStringRector;
 use RectorLaravel\Rector\If_\ThrowIfRector;
 use RectorLaravel\Set\LaravelSetList;
@@ -42,6 +43,12 @@ return RectorConfig::configure()
         LocallyCalledStaticMethodToNonStaticRector::class,
         ThrowIfRector::class,
         ThrowIfAndThrowUnlessExceptionsToUseClassStringRector::class,
+        // Blade::component() registers a class component under an alias;
+        // aliasComponent() registers an @directive pair for view paths
+        // instead, so the rename does not apply to the provider.
+        RenameMethodRector::class => [
+            __DIR__.'/src/XmorphServiceProvider.php',
+        ],
         __DIR__.'/vendor',
         __DIR__.'/tests/Fixtures',
     ])

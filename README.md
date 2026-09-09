@@ -15,6 +15,48 @@ transparent and its attributes merge onto the slot's root element.
 
 Without the flag, everything renders as before. Opt-in per component.
 
+### Authoring components with `<x-morph>`
+
+Author views stay one line — no `@php`/`@if` boilerplate. Forward the
+bag and the slot, name the fallback tag, and give its defaults:
+
+```blade
+{{-- resources/views/components/button.blade.php --}}
+<x-morph {{ $attributes }} tag="button" :defaults="['type' => 'button']" :flag="$__xmorphAsChild ?? false">{{ $slot }}</x-morph>
+```
+
+- `tag`: fallback element rendered when the flag is off.
+- `:defaults`: merged into the fallback only
+  (`$bag->merge($defaults)`, so caller values win); the asChild merge
+  never sees them.
+- `:flag`: carries the `@asChild` directive variable for scopes where
+  it is visible (same `?? false` guard as the old boilerplate).
+- `:bag="$attributes"`: optional escape hatch — an explicit
+  `ComponentAttributeBag` (or plain array) used instead of the spread
+  bag, e.g. to forward a filtered bag.
+
+The asChild marker is always stripped, on or off; `class` still
+concatenates child-first and other conflicts keep the child value.
+
+### Component alias
+
+The internal component above is registered as `<x-morph>` by default.
+When that name collides with an app component, publish the config and
+rename it:
+
+```bash
+php artisan vendor:publish --tag=xmorph-config
+```
+
+```php
+// config/xmorph.php
+return ['alias' => 'as-child'];
+```
+
+That gives `<x-as-child ...>` with the same props. After renaming,
+clear the compiled views (`php artisan view:clear`); if config is
+cached, re-cache it too (`php artisan config:cache`).
+
 ## Requirements
 
 - PHP >= 8.1
@@ -27,7 +69,8 @@ Without the flag, everything renders as before. Opt-in per component.
 composer require siddharthagf/xmorph
 ```
 
-The provider is auto-discovered, no config or publishing step.
+The provider is auto-discovered. No setup is needed unless you want
+to rename the internal component (see Component alias below).
 
 ## Usage
 
@@ -156,6 +199,8 @@ Behavior is documented above; these are the seams:
 - `XmorphServiceProvider::consumeAsChildFlag($attributes): array` —
   `[bool $isAsChild, ComponentAttributeBag $stripped]`; the marker is
   always stripped, on or off.
+- `View\Components\Morph` (`<x-morph>`, alias via `config/xmorph.php`) —
+  the one-line author wrapper: `tag`, `:defaults`, `:flag`, `:bag`.
 
 ## Development
 
