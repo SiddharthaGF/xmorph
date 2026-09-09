@@ -18,6 +18,10 @@ keep it in sync with behavior changes.
   is gitignored — library convention — never commit it).
 - CI (`.github/workflows/ci.yml`) runs `composer check` on PHP 8.1–8.4
   with a fresh resolve per version (no lockfile), proving the 8.1 floor.
+- CI sets `COMPOSER_NO_SECURITY_BLOCKING=1`: Laravel 10 is EOL so fresh
+  resolves get advisory-blocked — don't remove it. Keep `laravel/pint`
+  wide (`^1.0`): pinned `^1.31` requires PHP ^8.3 and breaks the matrix.
+  Don't re-add `--parallel` without checking old pint has the flag.
 
 ## Architecture
 

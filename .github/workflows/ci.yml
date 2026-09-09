@@ -39,6 +39,8 @@ jobs:
       # so the matrix proves the 8.1 floor, not a pinned set.
       - name: Install dependencies
         run: composer update --prefer-dist --no-interaction --no-progress
+        env:
+          COMPOSER_NO_SECURITY_BLOCKING: 1
 
       - name: Gates (style + static analysis + tests)
         run: composer check

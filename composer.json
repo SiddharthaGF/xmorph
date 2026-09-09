@@ -17,7 +17,7 @@
     },
     "require-dev": {
         "driftingly/rector-laravel": "^2.5",
-        "laravel/pint": "^1.31",
+        "laravel/pint": "^1.0",
         "livewire/livewire": "^3.0",
         "orchestra/testbench": "^8.0",
         "phpstan/phpstan": "^2.2",
@@ -44,8 +44,8 @@
         }
     },
     "scripts": {
-        "pint": "vendor/bin/pint --parallel",
-        "pint:test": "vendor/bin/pint --test --parallel",
+        "pint": "vendor/bin/pint",
+        "pint:test": "vendor/bin/pint --test",
         "phpstan": "vendor/bin/phpstan analyse --no-progress --memory-limit=512M",
         "rector": "vendor/bin/rector process",
         "rector:dry": "vendor/bin/rector process --dry-run",
