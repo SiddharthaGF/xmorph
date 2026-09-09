@@ -48,8 +48,8 @@ final class DynamicAsChildTest extends TestCase
         $after = $this->stripLivewireMeta($host->html());
 
         self::assertStringContainsString('<span id="count">1</span>', $after);
-        self::assertSame(1, mb_substr_count($after, 'btn-class'));
-        self::assertSame(1, mb_substr_count($after, 'btn-dynamic'));
+        self::assertSame(1, substr_count($after, 'btn-class'));
+        self::assertSame(1, substr_count($after, 'btn-dynamic'));
         self::assertStringContainsString(self::NORMAL_SNIPPET, $after);
 
         // Only the counter value changes; the merge is byte-identical.
@@ -69,8 +69,8 @@ final class DynamicAsChildTest extends TestCase
         self::assertStringContainsString('<a href="#" class="btn-dynamic">', $html);
         self::assertStringContainsString(self::NORMAL_SNIPPET, $html);
 
-        self::assertSame(1, mb_substr_count($html, 'btn-class'));
-        self::assertSame(1, mb_substr_count($html, 'btn-dynamic'));
+        self::assertSame(1, substr_count($html, 'btn-class'));
+        self::assertSame(1, substr_count($html, 'btn-dynamic'));
         self::assertStringContainsString('<span id="count">0</span>', $html);
     }
 

@@ -45,7 +45,7 @@ final class NestedAsChildTest extends TestCase
         $firstPaint = Livewire::test('xmorph-as-child-host')->html();
 
         // First paint merges the parent class onto the Livewire child root.
-        self::assertSame(1, mb_substr_count($firstPaint, 'btn-class'));
+        self::assertSame(1, substr_count($firstPaint, 'btn-class'));
 
         [$childId, $snapshot] = $this->extractChildSnapshot($firstPaint);
 
@@ -70,7 +70,7 @@ final class NestedAsChildTest extends TestCase
         self::assertStringNotContainsString('asChild', $html);
 
         // The parent class lands on the Livewire child root exactly once.
-        self::assertSame(1, mb_substr_count($html, 'btn-class'));
+        self::assertSame(1, substr_count($html, 'btn-class'));
 
         [$childId] = $this->extractChildSnapshot($html);
 

@@ -43,7 +43,7 @@ final class LivewireAsChildUpdateTest extends TestCase
 
         self::assertStringContainsString('wire:id', $html);
         self::assertStringContainsString('btn-class', $html);
-        self::assertSame(1, mb_substr_count($html, 'btn-class'));
+        self::assertSame(1, substr_count($html, 'btn-class'));
         self::assertStringNotContainsString('asChild', $html);
     }
 

@@ -17,6 +17,10 @@ parameters:
 
     level: max
 
+    # Analyze against the supported floor, not the runner's version, so
+    # PHP >8.1-only APIs fail locally instead of only in the 8.1 CI job.
+    phpVersion: 80100
+
     tmpDir: .phpstan-cache
 
     checkTooWideReturnTypesInProtectedAndPublicMethods: true

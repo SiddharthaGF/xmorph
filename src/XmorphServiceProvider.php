@@ -87,7 +87,7 @@ final class XmorphServiceProvider extends ServiceProvider
         // runtime with ComponentAttributeBag::has() and strips it with
         // ComponentAttributeBag::except() so no marker reaches HTML.
         Blade::directive('asChild', function (string $expression): string {
-            if (mb_trim($expression) === '') {
+            if (trim($expression) === '') {
                 return '<?php $__xmorphAsChild = true; ?>';
             }
 
@@ -111,7 +111,7 @@ final class XmorphServiceProvider extends ServiceProvider
         }
 
         if (is_string($value)) {
-            $normalized = mb_strtolower(mb_trim($value));
+            $normalized = strtolower(trim($value));
 
             if (in_array($normalized, ['', '0', 'false', 'no'], true)) {
                 return false;

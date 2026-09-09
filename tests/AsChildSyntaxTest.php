@@ -128,7 +128,7 @@ final class AsChildSyntaxTest extends TestCase
         $compiler = new BladeCompiler(new Filesystem, sys_get_temp_dir().'/xmorph-blade-test');
 
         $compiler->directive('asChild', function (string $expression): string {
-            if (mb_trim($expression) === '') {
+            if (trim($expression) === '') {
                 return '<?php $__xmorphAsChild = true; ?>';
             }
 
@@ -262,7 +262,7 @@ final class AsChildSyntaxTest extends TestCase
 
         self::assertNotFalse($raw, "Fixture {$file} must exist");
 
-        $html = mb_trim((string) preg_replace('/\{\{--.*?--\}\}/s', '', $raw));
+        $html = trim((string) preg_replace('/\{\{--.*?--\}\}/s', '', $raw));
 
         self::assertNotSame('', $html, "Fixture {$file} must hold a single-root snippet");
 

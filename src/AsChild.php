@@ -59,13 +59,13 @@ final class AsChild
      */
     private static function attributeName(string $pair): string
     {
-        $parts = preg_split('/\s*=\s*/', mb_trim($pair), 2);
+        $parts = preg_split('/\s*=\s*/', trim($pair), 2);
 
         if (! is_array($parts)) {
-            return mb_strtolower(mb_trim($pair));
+            return strtolower(trim($pair));
         }
 
-        return mb_strtolower($parts[0] ?? '');
+        return strtolower($parts[0] ?? '');
     }
 
     /**
@@ -95,7 +95,7 @@ final class AsChild
      */
     private static function normalizeAttributeOrder(string $attributeString): string
     {
-        $attributeString = mb_trim($attributeString);
+        $attributeString = trim($attributeString);
 
         // Fast path: no whitespace means a single pair, already ordered.
         if ($attributeString === '' || strcspn($attributeString, " \t\n\r\f\v") === strlen($attributeString)) {

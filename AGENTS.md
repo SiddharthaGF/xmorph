@@ -22,6 +22,10 @@ keep it in sync with behavior changes.
   resolves get advisory-blocked — don't remove it. Keep `laravel/pint`
   wide (`^1.0`): pinned `^1.31` requires PHP ^8.3 and breaks the matrix.
   Don't re-add `--parallel` without checking old pint has the flag.
+- Floor is PHP 8.1, enforced by `phpVersion: 80100` in
+  `phpstan.neon.dist`. No 8.2+ syntax and no `mb_*` at all — byte
+  functions only (`mb_trim`/`mb_rtrim` don't exist before 8.4; HTML
+  whitespace is ASCII anyway).
 
 ## Architecture
 

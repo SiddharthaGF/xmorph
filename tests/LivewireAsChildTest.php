@@ -17,7 +17,7 @@ final class LivewireAsChildTest extends TestCase
 {
     public function test_conditional_livewire_view_re_render_is_byte_identical(): void
     {
-        $slot = mb_trim((string) preg_replace(
+        $slot = trim((string) preg_replace(
             '/\{\{--.*?--\}\}/s',
             '',
             (string) file_get_contents(__DIR__.'/../resources/views/examples/conditional-button.blade.php')

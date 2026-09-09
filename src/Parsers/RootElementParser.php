@@ -41,7 +41,7 @@ final class RootElementParser implements HtmlParser
      */
     public function merge(string $slotHtml, string $mergedAttrString): string
     {
-        $mergedAttrString = mb_trim($mergedAttrString);
+        $mergedAttrString = trim($mergedAttrString);
 
         if ($mergedAttrString === '') {
             return $slotHtml;
@@ -59,7 +59,7 @@ final class RootElementParser implements HtmlParser
 
             if (preg_match('/\A((?:\s*<!--.*?-->\s*)+)/s', $cursor, $commentMatch) === 1) {
                 $prefix = $commentMatch[1];
-                $cursor = mb_substr($cursor, mb_strlen($commentMatch[1]));
+                $cursor = substr($cursor, strlen($commentMatch[1]));
             }
         }
 
@@ -75,7 +75,7 @@ final class RootElementParser implements HtmlParser
         $tagName = $match[2];
         $attrChunk = $match[3];
         $selfClosing = $match[4] === '/';
-        $rest = mb_substr($cursor, mb_strlen($match[0]));
+        $rest = substr($cursor, strlen($match[0]));
 
         if (! self::hasBalancedQuotes($attrChunk)) {
             return $slotHtml;
@@ -87,7 +87,7 @@ final class RootElementParser implements HtmlParser
             return $slotHtml;
         }
 
-        if (mb_trim($tail) !== '') {
+        if (trim($tail) !== '') {
             throw new MultipleRootElementsException();
         }
 
@@ -110,20 +110,20 @@ final class RootElementParser implements HtmlParser
             return null;
         }
 
-        $equalsPos = mb_strpos($rawPair, '=');
+        $equalsPos = strpos($rawPair, '=');
 
         if ($equalsPos === false) {
             return null;
         }
 
-        $value = mb_trim(mb_substr($rawPair, $equalsPos + 1));
+        $value = trim(substr($rawPair, $equalsPos + 1));
 
-        if (mb_strlen($value) >= 2) {
+        if (strlen($value) >= 2) {
             $first = $value[0];
-            $last = $value[mb_strlen($value) - 1];
+            $last = $value[strlen($value) - 1];
 
             if (($first === '"' && $last === '"') || ($first === "'" && $last === "'")) {
-                $value = mb_substr($value, 1, -1);
+                $value = substr($value, 1, -1);
             }
         }
 
@@ -133,7 +133,7 @@ final class RootElementParser implements HtmlParser
     private static function firstAttributeValue(string $attributeString, string $name): ?string
     {
         foreach (self::parseAttributePairs($attributeString) as [$pairName, $raw]) {
-            if (mb_strtolower($pairName) === mb_strtolower($name)) {
+            if (strtolower($pairName) === strtolower($name)) {
                 return self::attributeValue($raw);
             }
         }
@@ -176,14 +176,14 @@ final class RootElementParser implements HtmlParser
         $childNames = [];
 
         foreach (self::parseAttributePairs($attrChunk) as [$name]) {
-            $childNames[mb_strtolower($name)] = true;
+            $childNames[strtolower($name)] = true;
         }
 
         $toInsert = [];
         $parentClass = null;
 
         foreach (self::parseAttributePairs($mergedAttrString) as [$name, $raw]) {
-            $lower = mb_strtolower($name);
+            $lower = strtolower($name);
 
             if ($lower === 'class' && $parentClass === null) {
                 $parentClass = self::attributeValue($raw);
@@ -196,13 +196,13 @@ final class RootElementParser implements HtmlParser
             $toInsert[] = ['name' => $lower, 'raw' => $raw];
         }
 
-        $base = mb_rtrim($attrChunk);
+        $base = rtrim($attrChunk);
 
         if ($parentClass !== null && isset($childNames['class'])) {
             $childClass = self::firstAttributeValue($attrChunk, 'class');
 
             if ($childClass !== null) {
-                $combined = mb_trim($childClass.' '.$parentClass);
+                $combined = trim($childClass.' '.$parentClass);
 
                 if (str_contains($combined, '"')) {
                     return null;
@@ -271,7 +271,7 @@ final class RootElementParser implements HtmlParser
             }
         }
 
-        $lowerTag = mb_strtolower($tagName);
+        $lowerTag = strtolower($tagName);
 
         if ($lowerTag !== 'script' && $lowerTag !== 'style'
             && (stripos($rest, '</script') !== false || stripos($rest, '</style') !== false)
@@ -304,11 +304,11 @@ final class RootElementParser implements HtmlParser
             $matches
         ) > 0) {
             foreach ($matches[0] as $raw) {
-                $parts = preg_split('/\s*=\s*/', mb_trim($raw), 2);
+                $parts = preg_split('/\s*=\s*/', trim($raw), 2);
                 $name = is_array($parts) ? ($parts[0] ?? '') : '';
 
                 if ($name !== '') {
-                    $pairs[] = [$name, mb_trim($raw)];
+                    $pairs[] = [$name, trim($raw)];
                 }
             }
         }
@@ -331,8 +331,8 @@ final class RootElementParser implements HtmlParser
      */
     private static function tailAfterSingleRoot(string $tagName, bool $selfClosing, string $rest): ?string
     {
-        if ($selfClosing || in_array(mb_strtolower($tagName), self::VOID_ELEMENTS, true)) {
-            if (mb_trim($rest) !== '') {
+        if ($selfClosing || in_array(strtolower($tagName), self::VOID_ELEMENTS, true)) {
+            if (trim($rest) !== '') {
                 throw new MultipleRootElementsException();
             }
 
