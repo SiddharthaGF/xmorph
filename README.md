@@ -143,7 +143,7 @@ The single-root check counts real tags only.
 - Markup the parser cannot read safely (unbalanced quotes, unparsable
   tags) comes back untouched instead of breaking HTML.
 
-Example fixtures live under `resources/views/examples/`.
+Slot-child snippets used by `tests/AsChildSyntaxTest.php` live under `resources/views/examples/`, while the live `<x-button>` author example is `tests/Fixtures/views/components/button.blade.php` (used via the `xmorph::button` namespace in Livewire/functional tests).
 
 ## Custom parser
 

@@ -1,9 +1,1 @@
-@php
-[$xmorphIsAsChild, $xmorphAttributes] = \SiddharthaGF\XMorph\XmorphServiceProvider::consumeAsChildFlag($attributes);
-$xmorphIsAsChild = ($__xmorphAsChild ?? false) || $xmorphIsAsChild;
-@endphp
-@if ($xmorphIsAsChild)
-{!! \SiddharthaGF\XMorph\AsChild::renderSlot($xmorphAttributes, $slot->toHtml()) !!}
-@else
-<button {{ $xmorphAttributes->merge(['type' => 'button']) }}>{{ $slot }}</button>
-@endif
+<x-morph {{ $attributes }} tag="button" :defaults="['type' => 'button']" :flag="$__xmorphAsChild ?? false">{{ $slot }}</x-morph>
