@@ -1,0 +1,22 @@
+{
+    "indentSize": 4,
+    "wrapAttributes": "force-expand-multiline",
+    "wrapAttributesMinAttrs": 1,
+    "sortHtmlAttributes": "alphabetical",
+    "wrapLineLength": 120,
+    "indentInnerHtml": true,
+    "endWithNewLine": true,
+    "endOfLine": "LF",
+    "useTabs": false,
+    "sortTailwindcssClasses": true,
+    "noMultipleEmptyLines": false,
+    "noPhpSyntaxCheck": false,
+    "noSingleQuote": false,
+    "noTrailingCommaPhp": false,
+    "extraLiners": [],
+    "componentPrefix": [
+        "x-",
+        "livewire:"
+    ],
+    "phpVersion": "8.1"
+}

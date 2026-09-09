@@ -44,3 +44,22 @@ jobs:
 
       - name: Gates (style + static analysis + tests)
         run: composer check
+
+  blade:
+    name: Blade format
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+
+      - name: Install Node dependencies
+        run: npm ci --no-audit --no-fund
+
+      # Canonical command: `composer format:blade:test` (same glob).
+      - name: Check Blade formatting
+        run: npx --no-install blade-formatter -c "resources/views/**/*.blade.php"

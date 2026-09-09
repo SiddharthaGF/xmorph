@@ -3,4 +3,9 @@
 {{-- $attributes->merge(['class' => ...])->class([...]) so conditional --}}
 {{-- classes/styles resolve through ComponentAttributeBag semantics --}}
 {{-- before AsChild::renderSlot() delegates to RootElementParser. --}}
-<button type="button" class="btn" wire:click="save" x-data="{ open: false }">Save</button>
+<button
+    class="btn"
+    type="button"
+    wire:click="save"
+    x-data="{ open: false }"
+>Save</button>

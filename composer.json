@@ -46,6 +46,8 @@
     "scripts": {
         "pint": "vendor/bin/pint",
         "pint:test": "vendor/bin/pint --test",
+        "format:blade": "npx --no-install blade-formatter --write \"resources/views/**/*.blade.php\"",
+        "format:blade:test": "npx --no-install blade-formatter -c \"resources/views/**/*.blade.php\"",
         "phpstan": "vendor/bin/phpstan analyse --no-progress --memory-limit=512M",
         "rector": "vendor/bin/rector process",
         "rector:dry": "vendor/bin/rector process --dry-run",

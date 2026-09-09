@@ -1,0 +1,27 @@
+{
+  "name": "xmorph",
+  "version": "1.0.0",
+  "description": "Radix-style `asChild` for Blade/Livewire components: the parent goes transparent and its attributes merge onto the slot's root element.",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SiddharthaGF/xmorph.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/SiddharthaGF/xmorph/issues"
+  },
+  "homepage": "https://github.com/SiddharthaGF/xmorph#readme",
+  "devDependencies": {
+    "blade-formatter": "^1.44.4"
+  }
+}
